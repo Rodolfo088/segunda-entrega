@@ -36,9 +36,19 @@
         <button type="submit" onclick="login(event)">
           Login</button>
       </div>
+     <script>
+      let button = document.getElementById("login")
+      button.addEventListener("click", respuestaClick);
+      function respuestaClick(){
+        console.log("El Doctor a Iniciado Sesion")
+      }
+     </script>
+
     </form> 
     <div class="showContent" id="privateContent">
       <br>
+
+      
          
         <button
           type="button"
