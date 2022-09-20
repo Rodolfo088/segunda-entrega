@@ -10,32 +10,40 @@ class Patient {
   
   let patient = [];
   let counter = 1;
+  let idEditedPatient = 0;
   const tablePatient = document.querySelector("#patientTable tbody");
-  const PatientForm = document.querySelector("#addPatient");
+  const patientForm = document.querySelector("#addPatient");
   updatePatientTable();
   
   function savePatient() {
-     console.log(PatientForm.idPerson);
-     if (PatientForm.idPerson && PatientForm.idPerson != 0) {
-       for (let index = 0; index < Patient.length; index++) {
-         if (Patient[index].id == PatientForm.idPerson) {
-          Patient[index].name = PatientForm.PatientName.value;
-          Patient[index].age = PatientForm.PatientAge.value;
-          Patient[index].phone = PatientForm.PatientPhone.value;
-          Patient[index].record = PatientForm.PatientRecord.value;
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'El paciente ha sido registrado',
+      showConfirmButton: false,
+      timer: 1500
+    })
+     if (idEditedPatient != 0) {
+       for (let index = 0; index < patient.length; index++) {
+         if (patient[index].id == idEditedPatient) {
+          patient[index].name = patientForm.PatientName.value;
+          patient[index].age = patientForm.PatientAge.value;
+          patient[index].phone = patientForm.PatientPhone.value;
+          patient[index].record = patientForm.PatientRecord.value;
           break;
         }
       }
-      PatientForm["idPerson"] = 0;
       updatePatientTable();
+      idEditedPatient = 0;
+      
     } else {
       //crear
       const newPatient = new Patient(
         counter,
-        PatientForm.PatientName.value,
-        PatientForm.PatientAge.value,
-        PatientForm.PatientPhone.value,
-        PatientForm.PatientRecord.value
+        patientForm.PatientName.value,
+        patientForm.PatientAge.value,
+        patientForm.PatientPhone.value,
+        patientForm.PatientRecord.value
       );
       patient.push(newPatient);
       counter++;
@@ -76,21 +84,39 @@ class Patient {
   }
   
   function deletePatient(event) {
-    const btn = event.target;
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       const btn = event.target;
     const id = btn.id.split("_")[1];
     patient = patient.filter((person) => person.id != id);
-    updatePatientTable();
+    updatePatientTable(); 
+        Swal.fire(
+          'Eliminado!',
+          'Su paciente ha sido eliminado',
+          'success'
+        )
+      }
+    })
+    
   }
   
   function editPatient(event) {
     const btn = event.target;
     const id = btn.id.split("_")[1];
-    const persona = Patient.filter((person) => person.id == id)[0];
-    PatientForm.PatientName.value = persona.name;
-    PatientForm.PatientAge.value = persona.age;
-    PatientForm.PatientPhone.value = persona.phone;
-    PatientForm.PatientRecord.value = persona.record;
-    PatientForm["idPerson"] = persona.id;
-    console.dir(PatientForm);
+    const persona = patient.filter((person) => person.id == id)[0];
+    patientForm.PatientName.value = persona.name;
+    patientForm.PatientAge.value = persona.age;
+    patientForm.PatientPhone.value = persona.phone;
+    patientForm.PatientRecord.value = persona.record;
+    idEditedPatient = persona.id;
+    console.dir(patientForm);
   }
   

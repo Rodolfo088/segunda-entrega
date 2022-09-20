@@ -41,9 +41,10 @@
       button.addEventListener("click", respuestaClick);
       function respuestaClick(){
         console.log("El Doctor a Iniciado Sesion")
+        console.log(new Date())
       }
      </script>
-
+   
     </form> 
     <div class="showContent" id="privateContent">
       <br>
@@ -131,7 +132,7 @@
             </div>
           </div>
         </div>
-
+       
         <!-- Tabla de pacientes -->
         <table class="table" id="patientTable">
           <thead>
@@ -152,6 +153,7 @@
       integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
       crossorigin="anonymous"
     ></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="index.js"></script>
     <script src="sesion.js"></script>
   </body>
